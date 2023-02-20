@@ -38,13 +38,21 @@ export const createSlotMachine: () => SlotMachine | undefined = () :  SlotMachin
         globals.reelsStoppedAfterPlay++;
         console.log('Stopped ', globals.reelsStoppedAfterPlay, ' of ', config.numberOfReeels, ' reels');
         if(globals.reelsStoppedAfterPlay == config.numberOfReeels) {
-            console.log('Slot Machine Play id Finished!');
+            if(globals.playButton) {
+                globals.playButton.container.interactive = true;
+                globals.playButton.applyReadySkin();
+            };
+            console.log('Slot Machine Play is Finished!');
         }
     };
 
     const slotMachinePlay: () => void = () => {
         if(!reels || reels.length < 1) {
             return;
+        }
+
+        if(globals.playButton) {
+            globals.playButton.applySpinningSkin();
         }
 
         globals.reelsStoppedAfterPlay = 0;
