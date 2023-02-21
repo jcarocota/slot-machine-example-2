@@ -8,26 +8,13 @@ import { globals } from "./Globals";
 export const mainScene: (app: PIXI.Application) => void = (app) => {
   document.body.appendChild(app.view as HTMLCanvasElement);
 
-  /*
-    let slotObject = createSlot(); 
-    if(slotObject) {
-        app.stage.addChild(slotObject.sprite);
-    }
-    */
-
-  /*let reel = createReel();
-    if(reel) {
-        app.stage.addChild(reel.container);
-    }*/
-
   let slotMachine: SlotMachine = createSlotMachine();
   if (slotMachine) {
     app.stage.addChild(slotMachine.container);
-    //slotMachine.container.y = 50;
   }
 
-  const buttonWitdh: number = 180;
-  const buttonHeight: number = 80;
+  const buttonWitdh: number = 180; //pixels
+  const buttonHeight: number = 80; // pixels
 
   const playButton: PlayButton = createPlayButton(buttonWitdh, buttonHeight);
   if (playButton) {
@@ -50,8 +37,9 @@ export const mainScene: (app: PIXI.Application) => void = (app) => {
     globals.playButton = playButton;
   }
 
-  const infoBarWitdh: number = 180;
-  const infoBarHeight: number = 80;
+  const infoBarWitdh: number = 180; //pixels
+  const infoBarHeight: number = 80; //pixels
+
   const infoBar: InfoBar = createInfoBar(infoBarWitdh, infoBarHeight);
   if (infoBar) {
     app.stage.addChild(infoBar.container);
