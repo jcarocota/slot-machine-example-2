@@ -6,7 +6,7 @@ import { mainScene } from "./MainScene";
 
 export const app: () => void = () => {
   const app: PIXI.Application = new PIXI.Application({
-    backgroundColor: config.backgroundColor,
+    backgroundColor: config.backgroundAppColor,
     width: config.appWidth,
     height: config.appHeight,
   });

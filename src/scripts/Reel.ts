@@ -8,23 +8,41 @@ export interface Reel {
   spinReel: (finishSpin: () => void) => Promise<void>;
 }
 
+const slotsOnReadyPosition: (slots: Slot[]) => void = (slots: Slot[]) => {
+  slots.forEach((slot: Slot, i: number) => {
+    slot.sprite.x = 0;
+    slot.sprite.y = i * config.slotHeight;
+  });
+};
+
 export const createReel: () => Reel | undefined = (): Reel | undefined => {
   const reelContainer: PIXI.Container = new PIXI.Container();
 
   reelContainer.width = config.reelWidth;
   reelContainer.height = config.reelHeight;
 
+  const background: PIXI.Graphics = new PIXI.Graphics();
+  background.beginFill(config.backgroundReelColor);
+  background.drawRect(
+    0,
+    -1 * config.slotHeight,
+    config.reelWidth,
+    config.reelHeight + config.slotHeight * 2
+  );
+  background.endFill();
+  reelContainer.addChild(background);
+
   const slots: Slot[] = [];
 
   for (let i = 0; i < config.numberOfSlotsByReel + config.slotOffset; i++) {
     const slot: Slot | undefined = createSlot();
     if (slot) {
-      slot.sprite.x = 0;
-      slot.sprite.y = i * config.slotHeight;
       slots.push(slot);
       reelContainer.addChild(slot.sprite);
     }
   }
+
+  slotsOnReadyPosition(slots);
 
   const spinReel: (finishSpin: () => void) => Promise<void> = async (
     finishSpin: () => void
@@ -46,7 +64,7 @@ export const createReel: () => Reel | undefined = (): Reel | undefined => {
       undefined,
       9
     );
-    //blurFilter.blur = 5.0;
+
     reelContainer.filters = [blurFilter];
 
     const tickEvent = () => {
@@ -63,26 +81,48 @@ export const createReel: () => Reel | undefined = (): Reel | undefined => {
             finalSlotListIsSet = finishAnimation;
           }
         } else {
-          //slot.sprite.filters = [blurFilter];
           slot.sprite.y += -1 * (config.spinSpeedIndex + acelerationIncrement);
         }
       });
 
       if (finalSlotListIsSet) {
-        slots.forEach((slot: Slot, i: number) => {
-          slot.sprite.y = i * config.slotHeight;
-          //slot.sprite.filters = [];
-        });
+        slotsOnReadyPosition(slots);
         reelContainer.filters = [];
 
         ticker.stop();
         ticker.remove(tickEvent);
 
-        if (finishSpin) {
-          finishSpin();
-          console.log("we're gone");
-          return;
-        }
+        let bounceEffectDuration = config.bounceEffectDuration;
+        let bounceStepYAxis = config.maxBounceStepYAxis;
+        let sineAngle = 0;
+
+        const tickEventBounceEffect = () => {
+          let bounceYAxis = bounceStepYAxis * Math.sin(sineAngle);
+          sineAngle += 0.5;
+          reelContainer.y = bounceYAxis;
+
+          bounceEffectDuration -= ticker.deltaMS;
+          if (bounceEffectDuration <= 0) {
+            reelContainer.y = 0;
+            ticker.stop();
+            ticker.remove(tickEventBounceEffect);
+            console.log("Bye Bouncing");
+
+            if (finishSpin) {
+              finishSpin();
+              console.log("we're gone");
+              return;
+            }
+          } else {
+            bounceStepYAxis =
+              config.maxBounceStepYAxis *
+              (bounceEffectDuration / config.bounceEffectDuration);
+          }
+
+          console.log("Bouncing");
+        };
+        ticker.add(tickEventBounceEffect);
+        ticker.start();
       }
 
       timeLeftForSpin -= ticker.deltaMS;
@@ -90,26 +130,22 @@ export const createReel: () => Reel | undefined = (): Reel | undefined => {
       if (timeLeftForSpin <= 0) {
         finishAnimation = true;
         console.log("Time to go");
-        //acelerationIndex-=acelerationIncrement;
-        //acelerationIndex = acelerationIndex < 0 ? 0 : acelerationIndex;
       } else {
-        if (timeLeftForSpin / config.spinDurationInMillis > 0.6) {
+        if (
+          timeLeftForSpin / config.spinDurationInMillis >
+          config.spinCompletionPercentageForDeceleration
+        ) {
           acelerationIncrement += config.acelerationIndex;
           blurFilter.strength += config.acelerationIndex;
         } else {
-          acelerationIncrement -= config.acelerationIndex * 2;
-          blurFilter.strength -= config.acelerationIndex * 1.5;
+          acelerationIncrement -= config.acelerationIndex;
+          blurFilter.strength -= config.acelerationIndex;
           acelerationIncrement =
             acelerationIncrement < 0 ? 0 : acelerationIncrement;
           blurFilter.strength =
             blurFilter.strength < 0 ? 0 : blurFilter.strength;
         }
-        //acelerationIndex = acelerationIndex > 2 ? 2 : acelerationIndex;
       }
-      //console.log('timeLeftForSpin', timeLeftForSpin);
-
-      //elapsedTime+=ticker.deltaMS;
-      //console.log("elapsedTime", elapsedTime);
     };
 
     ticker.add(tickEvent);
