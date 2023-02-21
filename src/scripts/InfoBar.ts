@@ -1,5 +1,6 @@
 import * as PIXI from "pixi.js";
 import { config } from "../Config";
+import { globals } from "./Globals";
 
 export interface InfoBar {
   container: PIXI.Container;
@@ -19,10 +20,14 @@ export const createInfoBar: (
     fill: ["#000000"],
   };
 
-  const ticker: PIXI.Ticker = PIXI.Ticker.shared;
-  setInterval(() => {
-    text.text = "FPS: " + ticker.FPS.toFixed(4);
-  }, config.delayBetweenFPSUpdate);
+  let ticker: PIXI.Ticker = PIXI.Ticker.shared;
+  text.text = "FPS: " + ticker.FPS.toFixed(4);
+  if (globals.app) {
+    ticker = globals.app.ticker;
+    setInterval(() => {
+      text.text = "FPS: " + ticker.FPS.toFixed(4);
+    }, config.delayBetweenFPSUpdate);
+  }
 
   const container: PIXI.Container = new PIXI.Container();
   container.addChild(text);

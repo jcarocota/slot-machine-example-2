@@ -5,7 +5,6 @@ import { globals } from "./Globals";
 import { mainScene } from "./MainScene";
 
 export const app: () => void = () => {
-
   const app: PIXI.Application = new PIXI.Application({
     backgroundColor: config.backgroundColor,
     width: config.appWidth,

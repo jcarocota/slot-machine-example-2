@@ -31,7 +31,7 @@ const primaryConfig: PrimaryConfig = {
   backgroundColor: 0xd5d8dc,
   blurStrengthIndex: 20,
   delayBetweenReelSpin: 200, //Milisec
-  delayBetweenFPSUpdate: 10,
+  delayBetweenFPSUpdate: 500,
   numberOfReeels: 5, //Number of reels in slot machine
   numberOfSlotsByReel: 3, //Number of slots by reel
   slotMachineHeight: 360, //Pixels
