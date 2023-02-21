@@ -6,6 +6,7 @@ interface PrimaryConfig {
   backgroundReelColor: number;
   blurStrengthIndex: number;
   bounceEffectDuration: number;
+  componentSeparator: number;
   delayBetweenReelSpin: number;
   delayBetweenFPSUpdate: number;
   maxBounceStepYAxis: number;
@@ -36,6 +37,7 @@ const primaryConfig: PrimaryConfig = {
   backgroundReelColor: 0x0d2331, //Hex color for Reel background
   blurStrengthIndex: 20, //Blur index for Slots during spinning
   bounceEffectDuration: 1000, //Duration in Milisecs for reel bouncing effect
+  componentSeparator: 10, //Pixels of separation between components
   delayBetweenReelSpin: 200, //Delay in Milisecs to start a new reel spinning
   delayBetweenFPSUpdate: 500, //Delay in Milisecs for updating FPS Info
   maxBounceStepYAxis: 15, //Max step in pixels that a reel could experiment during bouncing animation
@@ -58,6 +60,7 @@ export const config: Config = {
   backgroundReelColor: primaryConfig.backgroundReelColor,
   blurStrengthIndex: primaryConfig.blurStrengthIndex,
   bounceEffectDuration: primaryConfig.bounceEffectDuration,
+  componentSeparator: primaryConfig.componentSeparator,
   delayBetweenReelSpin: primaryConfig.delayBetweenReelSpin,
   delayBetweenFPSUpdate: primaryConfig.delayBetweenFPSUpdate,
   maxBounceStepYAxis: primaryConfig.maxBounceStepYAxis,

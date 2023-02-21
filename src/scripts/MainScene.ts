@@ -44,6 +44,6 @@ export const mainScene: (app: PIXI.Application) => void = (app) => {
   if (infoBar) {
     app.stage.addChild(infoBar.container);
     infoBar.container.x = 0;
-    infoBar.container.y = config.slotMachineHeight + 10;
+    infoBar.container.y = config.slotMachineHeight + config.componentSeparator;
   }
 };
