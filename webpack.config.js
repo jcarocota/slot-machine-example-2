@@ -1,11 +1,10 @@
 const path = require("path");
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
-
 
 module.exports = [
   {
-    mode: 'development',
+    mode: "development",
     entry: "./src/index.ts",
     output: {
       path: path.join(__dirname, "build"),
@@ -21,23 +20,24 @@ module.exports = [
       ],
     },
     resolve: {
-      extensions: ['.tsx', '.ts', '.js'],
+      extensions: [".tsx", ".ts", ".js"],
     },
     target: "web",
     node: {
       __dirname: false,
     },
     plugins: [
-      new HtmlWebpackPlugin({ title: 'Slot Machine Preview' }),
+      new HtmlWebpackPlugin({ title: "Slot Machine Preview" }),
       new CopyPlugin({
-        patterns: [{ from: 'src/assets', to: 'assets', noErrorOnMissing: true}],
-        
-      })
+        patterns: [
+          { from: "src/assets", to: "assets", noErrorOnMissing: true },
+        ],
+      }),
     ],
     devServer: {
-      allowedHosts: 'auto',
-      port: 9000
+      allowedHosts: "auto",
+      port: 9000,
     },
-    devtool: 'inline-source-map'
-  }
+    devtool: "inline-source-map",
+  },
 ];
