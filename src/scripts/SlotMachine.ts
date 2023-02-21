@@ -9,7 +9,7 @@ export interface SlotMachine {
     slotMachinePlay: () => void
 };
 
-export const createSlotMachine: () => SlotMachine | undefined = () :  SlotMachine | undefined => {
+export const createSlotMachine: () => SlotMachine = () :  SlotMachine => {
     const slotMachineContainer: PIXI.Container = new PIXI.Container();
 
     slotMachineContainer.width = config.slotMachineWidth;
@@ -61,7 +61,7 @@ export const createSlotMachine: () => SlotMachine | undefined = () :  SlotMachin
             setTimeout(() => {
                 reel.spinReel(finishSpin);
                 console.log("Spin!!", new Date());
-            }, i*config.delayBeyweenReelSpin);
+            }, i*config.delayBetweenReelSpin);
             
         });
 

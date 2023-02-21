@@ -7,15 +7,11 @@ export interface PlayButton {
     applyHoverSkin: () => void
 }
 
-export const createPlayButton: () => PlayButton  = () => {
+export const createPlayButton: (buttonWitdh: number, buttonHeight:number) => PlayButton  = (buttonWitdh: number, buttonHeight:number) => {
     const background: PIXI.Graphics = new PIXI.Graphics();
     const readyColor:number = 0x2ecc71;
     const disableColor:number = 0x566573;
     const hoverColor:number =  0xf4d03f ;
-
-
-    const buttonWitdh = 180;
-    const buttonHeight = 80;
 
     background.beginFill(readyColor);
     background.drawRect(0, 0, buttonWitdh, buttonHeight);

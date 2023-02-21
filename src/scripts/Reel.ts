@@ -1,7 +1,6 @@
 import * as PIXI from 'pixi.js';
 import {Slot, createSlot} from './Slot';
 import {config} from '../Config';
-import {MotionBlurFilter} from 'pixi-filters';
 
 export interface Reel {
     container: PIXI.Container,
@@ -92,7 +91,7 @@ export const createReel: () => Reel | undefined = () :  Reel | undefined => {
                     blurFilter.strength+=config.acelerationIndex;
                 } else {
                     acelerationIncrement-=config.acelerationIndex*2;
-                    blurFilter.strength-=config.acelerationIndex*2;
+                    blurFilter.strength-=config.acelerationIndex*1.5;
                     acelerationIncrement = acelerationIncrement < 0 ? 0 : acelerationIncrement;
                     blurFilter.strength = blurFilter.strength < 0 ? 0 : blurFilter.strength;
                 }

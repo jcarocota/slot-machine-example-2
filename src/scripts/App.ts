@@ -19,9 +19,11 @@ export const app: () => void = () => {
         hello: false
     };
 
-    const app: PIXI.Application = new PIXI.Application(
-        pixiOptions
-    );
+    const app: PIXI.Application = new PIXI.Application({
+        backgroundColor: config.backgroundColor,
+        width: config.appWidth,
+        height: config.appHeight
+    });
 
     Assets.load(config.slotMachineSheet).then((sheet: Spritesheet) => {
         globals.app = app;

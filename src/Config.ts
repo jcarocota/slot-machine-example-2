@@ -4,7 +4,8 @@ interface PrimaryConfig {
     appWidth: number,
     backgroundColor: number,
     blurStrengthIndex: number,
-    delayBeyweenReelSpin: number,
+    delayBetweenReelSpin: number,
+    delayBetweenFPSUpdate: number,
     numberOfReeels: number,
     numberOfSlotsByReel: number,
     slotMachineHeight: number,
@@ -25,11 +26,12 @@ interface Config extends PrimaryConfig {
 //This part must be set by the user
 const primaryConfig: PrimaryConfig = {
     acelerationIndex:0.2,
-    appHeight: 1000,
+    appHeight: 460,
     appWidth: 600,
-    backgroundColor: 0xFFFFFF,
-    blurStrengthIndex: 15,
-    delayBeyweenReelSpin: 200,      //Milisec
+    backgroundColor:  0xd5d8dc ,
+    blurStrengthIndex: 20,
+    delayBetweenReelSpin: 200,      //Milisec
+    delayBetweenFPSUpdate: 10,
     numberOfReeels: 5,              //Number of reels in slot machine
     numberOfSlotsByReel: 3,         //Number of slots by reel
     slotMachineHeight: 360,         //Pixels
@@ -47,7 +49,8 @@ export const config: Config = {
     appWidth: primaryConfig.appWidth,
     backgroundColor: primaryConfig.backgroundColor,
     blurStrengthIndex: primaryConfig.blurStrengthIndex,
-    delayBeyweenReelSpin: primaryConfig.delayBeyweenReelSpin,
+    delayBetweenReelSpin: primaryConfig.delayBetweenReelSpin,
+    delayBetweenFPSUpdate: primaryConfig.delayBetweenFPSUpdate,
     numberOfReeels: primaryConfig.numberOfReeels,
     numberOfSlotsByReel: primaryConfig.numberOfSlotsByReel,
     reelHeight: primaryConfig.slotMachineHeight,
